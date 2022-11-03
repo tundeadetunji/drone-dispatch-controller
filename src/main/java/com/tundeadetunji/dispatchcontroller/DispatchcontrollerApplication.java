@@ -10,7 +10,7 @@ public class DispatchcontrollerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DispatchcontrollerApplication.class, args);
-		log.info("Application starting up - http://localhost:8080/api/");
+		log.info("* Application started - http://localhost:8080/api/");
 	}
 
 }

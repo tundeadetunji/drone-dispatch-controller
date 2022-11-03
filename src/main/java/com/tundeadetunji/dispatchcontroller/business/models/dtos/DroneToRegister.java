@@ -1,13 +1,14 @@
-package com.tundeadetunji.dispatchcontroller.business.models;
+package com.tundeadetunji.dispatchcontroller.business.models.dtos;
 
-import com.tundeadetunji.dispatchcontroller.business.domain.Domain.*;
+import com.tundeadetunji.dispatchcontroller.business.domain.Domain.Model;
+import com.tundeadetunji.dispatchcontroller.business.domain.Domain.State;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
 @Data
-public class Drone {
+public class DroneToRegister {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,10 +21,4 @@ public class Drone {
 
     @Column(nullable = false)
     private Double weightLimit;
-
-    @Column(nullable = false)
-    private Double batteryCapacity;
-
-    @Column(nullable = false, length = 10)
-    private String state;
 }
