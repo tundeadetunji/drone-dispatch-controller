@@ -4,6 +4,8 @@ import com.tundeadetunji.dispatchcontroller.business.domain.Domain.*;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Data
@@ -12,7 +14,7 @@ public class Drone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String serial;
 
     @Column(nullable = false, length = 13)
@@ -26,4 +28,8 @@ public class Drone {
 
     @Column(nullable = false, length = 10)
     private String state;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Medication> loadedMedication = new ArrayList<Medication>();
+
 }
