@@ -9,18 +9,14 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.tundeadetunji.dispatchcontroller.business.utility.Utility.codeIsValid;
 import static com.tundeadetunji.dispatchcontroller.business.utility.Utility.nameIsValid;
 
-@Slf4j
 @Data
-public class MedicationValidator {
+public class LoadMedicationValidator {
 
     private final DroneServiceImplementation droneService;
-
 
     public ErrorModel errorDuringMedicationLoad(MedicationToLoad medication, Drone drone) {
 
@@ -31,7 +27,7 @@ public class MedicationValidator {
         Long droneId = drone.getId();
         if (drone != null && !(droneId.toString().isEmpty()) && !(droneId.toString().isBlank())) {
             //checking if drone exists
-            if ( !(droneService.droneExists(drone.getId()))) {
+            if (!(droneService.droneExists(drone.getId()))) {
                 model.setDroneId("Drone Id is either null/blank or there's no match in the database");
                 ok = false;
             }
@@ -68,7 +64,7 @@ public class MedicationValidator {
         Collection<Medication> weights = drone.getLoadedMedication();
         Iterator<Medication> iterator = weights.iterator();
         double sum = 0.0;
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             sum += iterator.next().getWeight();
         }
         if (sum + medication.getWeight() > drone.getWeightLimit()) {

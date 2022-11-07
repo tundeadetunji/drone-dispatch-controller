@@ -7,7 +7,7 @@ import lombok.Data;
 import static com.tundeadetunji.dispatchcontroller.business.domain.Domain.*;
 
 @Data
-public class DroneValidator {
+public class RegisterDroneValidator {
 
     private final DroneServiceImplementation service;
 

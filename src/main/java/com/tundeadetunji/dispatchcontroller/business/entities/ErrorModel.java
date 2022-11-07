@@ -8,5 +8,6 @@ public class ErrorModel {
     private String message = DEFAULT_ERROR_MESSAGE;
     private ErrorsDuringDroneRegister droneRegisterModel;
     private ErrorsDuringMedicationLoad medicationLoadModel;
+    private ErrorsDuringViewDrone viewDroneModel;
     private boolean valid;
 }

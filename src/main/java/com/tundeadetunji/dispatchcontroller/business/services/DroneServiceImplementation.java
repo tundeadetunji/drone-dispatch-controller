@@ -1,5 +1,7 @@
 package com.tundeadetunji.dispatchcontroller.business.services;
 
+import com.tundeadetunji.dispatchcontroller.business.domain.Domain;
+import com.tundeadetunji.dispatchcontroller.business.entities.DroneToView;
 import com.tundeadetunji.dispatchcontroller.business.models.Drone;
 import com.tundeadetunji.dispatchcontroller.business.models.Medication;
 import com.tundeadetunji.dispatchcontroller.business.repositories.DroneRepository;
@@ -37,6 +39,11 @@ public class DroneServiceImplementation implements DroneService {
 
     @Override
     public boolean addMedicationToDrone(Medication medication, Drone drone) {
+        //set drone state to LOADING
+        drone.setState(Domain.State.LOADING.toString());
+        droneRepository.save(drone);
+
+        //save
         Medication newMedication = medicationRepository.save(medication);
         return drone.getLoadedMedication().add(newMedication);
     }

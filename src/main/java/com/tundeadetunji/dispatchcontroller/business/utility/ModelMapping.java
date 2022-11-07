@@ -1,14 +1,19 @@
 package com.tundeadetunji.dispatchcontroller.business.utility;
 
 import com.tundeadetunji.dispatchcontroller.business.domain.Domain.*;
+import com.tundeadetunji.dispatchcontroller.business.entities.DroneToView;
 import com.tundeadetunji.dispatchcontroller.business.models.Drone;
 import com.tundeadetunji.dispatchcontroller.business.models.Medication;
 import com.tundeadetunji.dispatchcontroller.business.entities.DroneToRegister;
 import com.tundeadetunji.dispatchcontroller.business.entities.MedicationToLoad;
+import com.tundeadetunji.dispatchcontroller.business.services.DroneServiceImplementation;
 import com.tundeadetunji.dispatchcontroller.business.services.MedicationServiceImplementation;
 
+import java.util.List;
+
 public class ModelMapping {
-    public Drone fromDroneToRegister(final DroneToRegister droneToRegister){
+
+    public Drone fromDroneToRegister(DroneToRegister droneToRegister){
         Drone drone = new Drone();
         drone.setSerial(droneToRegister.getSerial());
         drone.setModel(droneToRegister.getModel());
