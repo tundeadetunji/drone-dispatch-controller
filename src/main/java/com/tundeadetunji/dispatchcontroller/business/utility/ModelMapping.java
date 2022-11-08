@@ -1,6 +1,7 @@
 package com.tundeadetunji.dispatchcontroller.business.utility;
 
 import com.tundeadetunji.dispatchcontroller.business.domain.Domain.*;
+import com.tundeadetunji.dispatchcontroller.business.entities.DroneBatteryCapacityToReturn;
 import com.tundeadetunji.dispatchcontroller.business.entities.DroneToView;
 import com.tundeadetunji.dispatchcontroller.business.models.Drone;
 import com.tundeadetunji.dispatchcontroller.business.models.Medication;
@@ -44,6 +45,15 @@ public class ModelMapping {
             medication.setDroneId(medicationToLoad.getDroneId());
             return medication;
         }
+    }
+
+    public DroneBatteryCapacityToReturn fromDroneBatterCapacityToReturn(DroneToView droneToView, DroneServiceImplementation droneService){
+        DroneBatteryCapacityToReturn model = new DroneBatteryCapacityToReturn();
+        Drone drone = droneService.findById(droneToView.getId());
+        model.setId(drone.getId());
+        model.setSerial(drone.getSerial());
+        model.setBatteryCapacity(drone.getBatteryCapacity());
+        return model;
     }
 
 }

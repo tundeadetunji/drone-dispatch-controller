@@ -1,14 +1,11 @@
 package com.tundeadetunji.dispatchcontroller.web.controllers;
 
-import com.tundeadetunji.dispatchcontroller.business.entities.DroneToView;
+import com.tundeadetunji.dispatchcontroller.business.entities.*;
 import com.tundeadetunji.dispatchcontroller.business.models.Drone;
-import com.tundeadetunji.dispatchcontroller.business.entities.DroneToRegister;
-import com.tundeadetunji.dispatchcontroller.business.entities.MedicationToLoad;
 import com.tundeadetunji.dispatchcontroller.business.services.DroneServiceImplementation;
 import com.tundeadetunji.dispatchcontroller.business.services.MedicationServiceImplementation;
 import com.tundeadetunji.dispatchcontroller.business.utility.LoadMedicationValidator;
 import com.tundeadetunji.dispatchcontroller.business.utility.ModelMapping;
-import com.tundeadetunji.dispatchcontroller.business.entities.ErrorModel;
 import com.tundeadetunji.dispatchcontroller.business.utility.RegisterDroneValidator;
 import com.tundeadetunji.dispatchcontroller.business.utility.ViewDroneValidator;
 import lombok.Data;
@@ -69,6 +66,20 @@ public class APIController {
     }
 
 
+    //view battery capacity of drone (finds it by id)
+    @GetMapping("/battery")
+    public ResponseEntity<Object> getDroneBatteryCapacity(@RequestBody DroneToView drone){
+        ViewDroneValidator validator = new ViewDroneValidator(droneService);
+        ErrorModel model = validator.errorDuringViewDrone(drone);
+        if (model.isValid()){
+            return ResponseEntity.status(HttpStatus.FOUND).body(new ModelMapping().fromDroneBatterCapacityToReturn(drone, droneService));
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(model);
+        }
+    }
+
+
     //view drones that are in LOADING or IDLE state
     @GetMapping("/available")
     public ResponseEntity<Object> getLoadingDrones(){
@@ -76,7 +87,6 @@ public class APIController {
     }
 
 
-    //todo return object not boolean
     //load a drone with medication item
     @PostMapping("/load")
     public ResponseEntity<Object> LoadDrone(@RequestBody MedicationToLoad medication) {
