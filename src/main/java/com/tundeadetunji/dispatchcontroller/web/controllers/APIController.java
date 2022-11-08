@@ -68,20 +68,15 @@ public class APIController {
         }
     }
 
-    //view a drone's list of (loaded) medication
-    @GetMapping("/loaded")
-    public ResponseEntity<Object> checkLoadedMedication(@RequestBody DroneToView drone){
-        ViewDroneValidator validator = new ViewDroneValidator(droneService);
-        ErrorModel model = validator.errorDuringViewDrone(drone);
-        if (model.isValid()){
-            return ResponseEntity.status(HttpStatus.FOUND).body(droneService.findById(drone.getId()).getLoadedMedication());
-        }
-        else{
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(model);
-        }
+
+    //view drones that are in LOADING or IDLE state
+    @GetMapping("/available")
+    public ResponseEntity<Object> getLoadingDrones(){
+        return ResponseEntity.status(HttpStatus.FOUND).body(droneService.findWhereLoading());
     }
 
 
+    //todo return object not boolean
     //load a drone with medication item
     @PostMapping("/load")
     public ResponseEntity<Object> LoadDrone(@RequestBody MedicationToLoad medication) {
@@ -91,6 +86,20 @@ public class APIController {
         if (model.isValid()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(droneService.addMedicationToDrone(new ModelMapping().fromMedicationToLoad(medication, medicationService), drone));
         } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(model);
+        }
+    }
+
+
+    //view a drone's list of (loaded) medication
+    @GetMapping("/loaded")
+    public ResponseEntity<Object> checkLoadedMedication(@RequestBody DroneToView drone){
+        ViewDroneValidator validator = new ViewDroneValidator(droneService);
+        ErrorModel model = validator.errorDuringViewDrone(drone);
+        if (model.isValid()){
+            return ResponseEntity.status(HttpStatus.FOUND).body(droneService.findById(drone.getId()).getLoadedMedication());
+        }
+        else{
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(model);
         }
     }

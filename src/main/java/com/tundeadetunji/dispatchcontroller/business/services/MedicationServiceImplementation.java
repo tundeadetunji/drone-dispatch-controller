@@ -17,6 +17,12 @@ public class MedicationServiceImplementation implements MedicationService{
 
     @Override
     public Medication findByName(String name) {
-        return repository.findByName(name);
+        Medication medication = repository.findByName(name);
+        if (medication != null){
+            return medication;
+        }
+        else{
+            return null;
+        }
     }
 }

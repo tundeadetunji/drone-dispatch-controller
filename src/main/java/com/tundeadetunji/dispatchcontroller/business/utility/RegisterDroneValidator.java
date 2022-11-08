@@ -23,9 +23,9 @@ public class RegisterDroneValidator {
             ok = false;
         }
 
-        //don't allow re-registering of the same serial
+        //don't allow re-registering w/ the same serial
         if (service.findBySerial(serial) != null){
-            model.setSerial("Drone with given serial already exist in the database");
+            model.setSerial("Drone with given serial already exists in the database");
             ok=false;
         }
 

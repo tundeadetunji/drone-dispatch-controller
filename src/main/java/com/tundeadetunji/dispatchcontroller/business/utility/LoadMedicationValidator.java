@@ -23,14 +23,11 @@ public class LoadMedicationValidator {
         ErrorsDuringMedicationLoad model = new ErrorsDuringMedicationLoad();
         boolean ok = true;
 
-        //checking if drone id is not blank/empty
+        //checking if drone exists by id
         Long droneId = drone.getId();
-        if (drone != null && !(droneId.toString().isEmpty()) && !(droneId.toString().isBlank())) {
-            //checking if drone exists
-            if (!(droneService.droneExists(drone.getId()))) {
-                model.setDroneId("Drone Id is either null/blank or there's no match in the database");
-                ok = false;
-            }
+        if (droneService.droneExists(droneId) == false) {
+            model.setDroneId("Drone Id is either null/blank or there's no match in the database");
+            ok = false;
         }
 
         //checking if name is not blank/empty

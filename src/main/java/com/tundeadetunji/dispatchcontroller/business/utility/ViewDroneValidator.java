@@ -17,14 +17,11 @@ public class ViewDroneValidator {
 
         //the id is needed to view the drone info
 
-        //checking if id was supplied
+        //checking if drone exists by supplied id
         Long id = drone.getId();
-        if (String.valueOf(id).length() > 0) {
-            //checking if drone exists by id
-            if (droneService.findById(id) == null){
-                model.setId("Id wasn't supplied or there's no match in the database");
-                ok = false;
-            }
+        if (droneService.droneExists(id) == false) {
+            model.setId("Id wasn't supplied or there's no match in the database");
+            ok = false;
         }
 
         ErrorModel result = new ErrorModel();
