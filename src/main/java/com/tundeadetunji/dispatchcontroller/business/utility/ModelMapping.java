@@ -1,17 +1,19 @@
 package com.tundeadetunji.dispatchcontroller.business.utility;
 
 import com.tundeadetunji.dispatchcontroller.business.domain.Domain.*;
-import com.tundeadetunji.dispatchcontroller.business.entities.DroneBatteryCapacityToReturn;
-import com.tundeadetunji.dispatchcontroller.business.entities.DroneToView;
+import com.tundeadetunji.dispatchcontroller.business.entities.*;
 import com.tundeadetunji.dispatchcontroller.business.models.Drone;
 import com.tundeadetunji.dispatchcontroller.business.models.Medication;
-import com.tundeadetunji.dispatchcontroller.business.entities.DroneToRegister;
-import com.tundeadetunji.dispatchcontroller.business.entities.MedicationToLoad;
 import com.tundeadetunji.dispatchcontroller.business.services.DroneServiceImplementation;
 import com.tundeadetunji.dispatchcontroller.business.services.MedicationServiceImplementation;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
+@Slf4j
 public class ModelMapping {
 
     public Drone fromDroneToRegister(DroneToRegister droneToRegister){
@@ -56,4 +58,21 @@ public class ModelMapping {
         return model;
     }
 
+    public List<MedicationToReturn> fromMedicationToReturn(Collection<Medication> medications){
+        //removing droneId from each Medication object
+        //just to show the Medication without where it's loaded
+        List<MedicationToReturn> list = new ArrayList<MedicationToReturn>();
+        Iterator<Medication> iterator = medications.iterator();
+        while(iterator.hasNext()){
+            Medication med = iterator.next();
+            MedicationToReturn medication = new MedicationToReturn();
+            medication.setId(med.getId());
+            medication.setName(med.getName());
+            medication.setWeight(med.getWeight());
+            medication.setCode(med.getCode());
+            medication.setImage(med.getImage());
+            list.add(medication);
+        }
+        return list;
+    }
 }

@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -112,5 +114,12 @@ public class APIController {
         else{
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(model);
         }
+    }
+
+
+    @GetMapping("/medications")
+    public ResponseEntity<Object> getSavedMedications(){
+        List<MedicationToReturn> list = new ModelMapping().fromMedicationToReturn(medicationService.getMedications());
+        return ResponseEntity.status(HttpStatus.FOUND).body(list);
     }
 }

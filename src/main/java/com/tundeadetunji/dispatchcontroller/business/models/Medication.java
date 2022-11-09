@@ -20,7 +20,7 @@ public class Medication {
     @Column(nullable = false)
     private String code;
 
-    @Column(nullable = false, length = 4000)
+    @Column(nullable = false, columnDefinition = "CHARACTER LARGE OBJECT")
     private String image;
 
     @Column(nullable = false)
