@@ -3,7 +3,9 @@ package com.tundeadetunji.dispatchcontroller;
 import com.tundeadetunji.dispatchcontroller.business.entities.DroneToRegister;
 import com.tundeadetunji.dispatchcontroller.business.entities.MedicationToLoad;
 import com.tundeadetunji.dispatchcontroller.business.models.Drone;
+import com.tundeadetunji.dispatchcontroller.business.models.DroneBatteryCapacityLog;
 import com.tundeadetunji.dispatchcontroller.business.models.Medication;
+import com.tundeadetunji.dispatchcontroller.business.repositories.DroneBatteryCapacityLogRepository;
 import com.tundeadetunji.dispatchcontroller.business.repositories.DroneRepository;
 import com.tundeadetunji.dispatchcontroller.business.repositories.MedicationRepository;
 import com.tundeadetunji.dispatchcontroller.business.services.DroneServiceImplementation;
@@ -11,26 +13,31 @@ import com.tundeadetunji.dispatchcontroller.business.services.MedicationServiceI
 import com.tundeadetunji.dispatchcontroller.business.utility.ModelMapping;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @SpringBootApplication
+@EnableScheduling
 @Slf4j
 public class DispatchcontrollerApplication {
 
+	@Autowired
+	private ApplicationContext context;
+
 	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(DispatchcontrollerApplication.class, args);
+	    ConfigurableApplicationContext context = SpringApplication.run(DispatchcontrollerApplication.class, args);
 
 		//load initial data
 		ModelMapping mapper = new ModelMapping();
 		DroneServiceImplementation droneService = new DroneServiceImplementation(context.getBean(DroneRepository.class), context.getBean(MedicationRepository.class));
+
 		MedicationServiceImplementation medicationService = new MedicationServiceImplementation(context.getBean(MedicationRepository.class));
 		theDrones(mapper).stream().forEach(drone -> droneService.saveDrone(drone));
 		theMedications(mapper, medicationService).stream().forEach(medication -> medicationService.saveMedication(medication));
@@ -38,7 +45,22 @@ public class DispatchcontrollerApplication {
 		//started...
 		log.info("* Application started - http://localhost:8080/api/");
 		log.info("* InMemory Database - http://localhost:8080/h2-console (username: sa, password:)");
+		log.info("* Battery capacity information for all drones will be logged into the database every 1 minute");
 	}
+
+    @Scheduled(fixedRate = 60000L)
+    void logBatteryCapacity(){
+
+		DroneRepository droneRepository =  context.getBean(DroneRepository.class);
+		MedicationRepository medicationRepository =  context.getBean(MedicationRepository.class);
+		DroneServiceImplementation droneService = new DroneServiceImplementation(droneRepository, medicationRepository);
+
+        ModelMapping mapper = new ModelMapping();
+		List<DroneBatteryCapacityLog> list = mapper.fromDroneBatteryCapacityLog(droneService.findAll());
+		list.stream().forEach(l -> {
+			context.getBean(DroneBatteryCapacityLogRepository.class).save(l);
+		});
+    }
 
 
 	public static List<Drone> theDrones(ModelMapping mapper){

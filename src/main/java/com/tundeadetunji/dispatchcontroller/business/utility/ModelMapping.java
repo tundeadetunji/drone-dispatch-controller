@@ -2,6 +2,7 @@ package com.tundeadetunji.dispatchcontroller.business.utility;
 
 import com.tundeadetunji.dispatchcontroller.business.domain.Domain.*;
 import com.tundeadetunji.dispatchcontroller.business.entities.*;
+import com.tundeadetunji.dispatchcontroller.business.models.DroneBatteryCapacityLog;
 import com.tundeadetunji.dispatchcontroller.business.models.Drone;
 import com.tundeadetunji.dispatchcontroller.business.models.Medication;
 import com.tundeadetunji.dispatchcontroller.business.services.DroneServiceImplementation;
@@ -74,5 +75,33 @@ public class ModelMapping {
             list.add(medication);
         }
         return list;
+    }
+
+    public List<DroneBatteryCapacityLog> fromDroneBatteryCapacityLog(List<Drone> drones){
+        List<DroneBatteryCapacityLog> models = new ArrayList<DroneBatteryCapacityLog>();
+        Iterator<Drone> iterator = drones.iterator();
+        while(iterator.hasNext()){
+            Drone drone = iterator.next();
+
+            //getting the sum of all weights of loaded medication
+            List<Medication> medications = (List<Medication>) drone.getLoadedMedication();
+            Double weight = 0.0;
+            List<Double> weights = new ArrayList<>();
+            medications.stream().forEach(m -> weights.add(m.getWeight()));
+            Iterator<Double> weightsIterator = weights.iterator();
+            while(weightsIterator.hasNext()){
+                weight += Double.parseDouble(String.valueOf(weightsIterator.next()));
+            }
+
+            DroneBatteryCapacityLog model = new DroneBatteryCapacityLog();
+            model.setDroneId(drone.getId());
+            model.setState(drone.getState());
+            model.setWeight(weight);
+            model.setBatteryCapacity(drone.getBatteryCapacity());
+
+            models.add(model);
+        }
+
+        return models;
     }
 }
