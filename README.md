@@ -2,38 +2,33 @@
 
 SpringBoot 2.7.4 (or 2.7.5)
 
-w/H2 (InMemory Database)
+w /H2 (InMemory Database)
 
 10 Drones, 5 Medications preloaded
 
 Battery Information is logged every 1 minute
 
-InMemory Database details:
 
-URL
+InMemory Database details:
+* URL
 
 http://localhost:8080/h2-console 
 
-username
+* username
 
 sa
 
-password
-
+* password
 
 
 
 ### To register a drone:
-
-url
-
-http://localhost:8080/api/register
-
-method
-
-POST
+---
+* url: http://localhost:8080/api/register
+* method: POST
 
 sample request body
+
 `{
     "serial":"abc",
     "model":"Lightweight",
@@ -41,6 +36,7 @@ sample request body
 }`
 
 response
+
 `{
     "id": 11,
     "serial": "abc",
