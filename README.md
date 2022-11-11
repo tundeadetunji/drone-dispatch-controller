@@ -10,24 +10,18 @@ Battery Information is logged every 1 minute
 
 
 InMemory Database details:
-* URL
-
-http://localhost:8080/h2-console 
-
-* username
-
-sa
-
-* password
+* URL: http://localhost:8080/h2-console 
+* username: sa
+* password:
 
 
-
+---
 ### To register a drone:
 ---
 * url: http://localhost:8080/api/register
 * method: POST
 
-sample request body
+* sample request body
 
 `{
     "serial":"abc",
@@ -35,7 +29,7 @@ sample request body
     "weightLimit":200
 }`
 
-response
+* response
 
 `{
     "id": 11,
@@ -48,23 +42,20 @@ response
 }`
 
 
-
+---
 ### To view a drone:
+---
+* url: http://localhost:8080/api/drone
+* method: GET
 
-url
+* sample request body
 
-http://localhost:8080/api/drone
-
-method
-
-GET
-
-sample request body
 `{
     "id":1
 }`
 
-response
+* response
+
 `{
     "id": 1,
     "serial": "drone1",
@@ -76,35 +67,27 @@ response
 }`
 
 
-
+---
 ### To view all drones:
-
-url
-
-http://localhost:8080/api/drones
-
-method
-
-GET
+---
+* url: http://localhost:8080/api/drones
+* method: GET
 
 
-
+---
 ### To get battery capacity of a drone:
+---
+* url: http://localhost:8080/api/battery
+* method: GET
 
-url
+* sample request body
 
-http://localhost:8080/api/battery
-
-method
-
-GET
-
-sample request body
 `{
     "id":1
 }`
 
-response
+* response
+
 `{
     "id": 1,
     "serial": "drone1",
@@ -112,31 +95,22 @@ response
 }`
 
 
-
+---
 ### To view available drones for loading (in IDLE or LOADING states) 
-* returns drones that are either idle or loaded but not to weight limit (loading):
-
-url
-
-http://localhost:8080/api/available
-
-method
-
-GET
+---
+#### returns drones that are either idle or loaded but not to weight limit (loading):
+* url: http://localhost:8080/api/available
+* method: GET
 
 
-
+---
 ### To load a drone with medication:
+---
+* url: http://localhost:8080/api/load
+* method: POST
 
-url
+* sample request body
 
-http://localhost:8080/api/load
-
-method
-
-POST
-
-sample request body
 `{
     "name": "med1",
     "weight":100,
@@ -145,7 +119,8 @@ sample request body
     "droneId": 1
 }`
 
-response
+* response
+
 `{
     "id": 1,
     "serial": "drone1",
@@ -166,23 +141,20 @@ response
 }`
 
 
-
+---
 ### To view a drone's list of loaded medications:
+---
+* url: http://localhost:8080/api/loaded
+* method: GET
 
-url
+* sample request body
 
-http://localhost:8080/api/loaded
-
-method
-
-GET
-
-sample request body
 `{
     "id":1
 }`
 
-response
+* response
+
 `[
     {
         "id": 6,
@@ -195,14 +167,9 @@ response
 ]`
 
 
-
+---
 ### To get list of saved medications:
-
-url
-
-http://localhost:8080/api/medications
-
-method
-
-GET
+---
+* url: http://localhost:8080/api/medications
+* method: GET
 
