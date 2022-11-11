@@ -6,13 +6,16 @@ w/ H2 (InMemory Database)
 
 10 Drones, 5 Medications preloaded
 
-Battery Information is logged every 1 minute
+Battery Information is logged every 1 minute (table: DRONE_BATTERY_CAPACITY_LOG)
 
 
 InMemory Database details:
 * URL: http://localhost:8080/h2-console 
 * username: sa
 * password:
+* SETTING: Generic H2 (Embedded)
+* DRIVER CLASS: org.h2.Driver
+* JDBC URL: jdbc:h2:mem:testdb
 
 
 ---
