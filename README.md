@@ -2,7 +2,7 @@
 
 SpringBoot 2.7.4 (or 2.7.5)
 
-w /H2 (InMemory Database)
+w/ H2 (InMemory Database)
 
 10 Drones, 5 Medications preloaded
 
