@@ -53,6 +53,7 @@ public class DroneServiceImplementation implements DroneService {
     @Override
     public Drone addMedicationToDrone(Medication medication, Drone drone) {
 
+        //determining the weight of already loaded medication
         Collection<Medication> medications =  drone.getLoadedMedication();
         Iterator<Medication> iterator = medications.iterator();
         Double loaded = 0.0;
@@ -60,10 +61,12 @@ public class DroneServiceImplementation implements DroneService {
             loaded += iterator.next().getWeight();
         }
 
-        //save
+        //save the medication
         Medication newMedication = medicationRepository.save(medication);
 
-        //set drone state to LOADING if added weights is under drone's weight limit, or LOADED if at drone's weight limit
+        //set drone state to LOADING if added weights is under drone's weight limit,
+        //or LOADED if at drone's weight limit
+        //then update the drone's info
         Double weightLimit = drone.getWeightLimit();
         Double weight = medication.getWeight() + loaded;
         if (weight >= weightLimit){
@@ -74,8 +77,8 @@ public class DroneServiceImplementation implements DroneService {
             drone.setState(Domain.State.LOADING.toString());
             droneRepository.save(drone);
         }
-
         drone.getLoadedMedication().add(newMedication);
+
         return drone;
     }
 

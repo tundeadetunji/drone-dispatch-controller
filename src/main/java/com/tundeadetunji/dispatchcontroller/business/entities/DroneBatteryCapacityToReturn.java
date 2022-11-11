@@ -7,6 +7,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * This is the object that is returned when user requests
+ * battery capacity for given drone.
+ */
+
 @Data
 public class DroneBatteryCapacityToReturn {
     private Long id;

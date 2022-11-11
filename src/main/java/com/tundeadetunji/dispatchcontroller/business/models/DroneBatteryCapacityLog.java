@@ -5,6 +5,11 @@ import lombok.Data;
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 
+/**
+ * This represents the information logged into the
+ * database about the drone at 1 minute intervals.
+ */
+
 @Data
 @Entity
 public class DroneBatteryCapacityLog {

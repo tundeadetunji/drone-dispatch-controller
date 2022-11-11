@@ -4,6 +4,11 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * This is the object that is returned when user requests
+ * information about a medication.
+ */
+
 @Data
 public class MedicationToReturn {
     private Long id;

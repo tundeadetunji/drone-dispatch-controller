@@ -6,6 +6,13 @@ import lombok.Data;
 
 import static com.tundeadetunji.dispatchcontroller.business.domain.Domain.*;
 
+/**
+ * This is the logic that is used to trap invalid/incomplete
+ * values the user enters when attempting to register drone.
+ * The feedback is used to build the ErrorModel object
+ * that is later passed back to the user.
+ */
+
 @Data
 public class RegisterDroneValidator {
 

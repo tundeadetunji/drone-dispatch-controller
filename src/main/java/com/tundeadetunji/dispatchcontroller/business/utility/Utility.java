@@ -5,6 +5,11 @@ import lombok.Data;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * The logic in this file is used to validate the name and code of
+ * medication when attempting to load medication onto drone.
+ */
+
 @Data
 public class Utility {
 

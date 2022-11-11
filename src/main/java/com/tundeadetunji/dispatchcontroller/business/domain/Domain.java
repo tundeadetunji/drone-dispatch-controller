@@ -1,5 +1,8 @@
 package com.tundeadetunji.dispatchcontroller.business.domain;
 
+/**
+ * Domain (Business) related info are kept in this file
+ */
 public class Domain {
     public enum Model{
         Lightweight, Middleweight, Cruiserweight, Heavyweight

@@ -6,6 +6,14 @@ import com.tundeadetunji.dispatchcontroller.business.entities.ErrorsDuringViewDr
 import com.tundeadetunji.dispatchcontroller.business.services.DroneServiceImplementation;
 import lombok.Data;
 
+/**
+ * This is the logic that is used to trap invalid/incomplete
+ * values the user enters when attempting to view information
+ * about a drone.
+ * The feedback is used to build the ErrorModel object
+ * that is later passed back to the user.
+ */
+
 @Data
 public class ViewDroneValidator {
     private final DroneServiceImplementation droneService;

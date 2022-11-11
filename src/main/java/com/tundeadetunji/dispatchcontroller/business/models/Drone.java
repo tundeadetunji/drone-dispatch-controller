@@ -7,6 +7,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * This represents a drone object. Some values are
+ * initialized to default values during registration.
+ */
+
 @Entity
 @Data
 public class Drone {
@@ -24,12 +29,12 @@ public class Drone {
     private Double weightLimit;
 
     @Column(nullable = false)
-    private Double batteryCapacity;
+    private Double batteryCapacity; //initialized to 100.0 at time of registration
 
     @Column(nullable = false, length = 10)
-    private String state;
+    private String state; //initialized to IDLE at time of registration
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Medication> loadedMedication = new ArrayList<Medication>();
+    private Collection<Medication> loadedMedication = new ArrayList<Medication>(); //is empty at time of registration
 
 }

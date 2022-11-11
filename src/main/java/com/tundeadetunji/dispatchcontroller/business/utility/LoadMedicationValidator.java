@@ -13,6 +13,14 @@ import java.util.Iterator;
 import static com.tundeadetunji.dispatchcontroller.business.utility.Utility.codeIsValid;
 import static com.tundeadetunji.dispatchcontroller.business.utility.Utility.nameIsValid;
 
+/**
+ * This is the logic that is used to trap invalid/incomplete
+ * values the user enters when attempting to load medication
+ * onto the drone.
+ * The feedback is used to build the ErrorModel object
+ * that is later passed back to the user.
+ */
+
 @Data
 public class LoadMedicationValidator {
 

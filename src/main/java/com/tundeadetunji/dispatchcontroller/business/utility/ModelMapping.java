@@ -14,6 +14,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * This file contains logic to convert objects, specifically from
+ * the objects in the entities package to the objects in the
+ * models package.
+ */
+
 @Slf4j
 public class ModelMapping {
 
@@ -32,7 +38,7 @@ public class ModelMapping {
         //but leave each load as a separate record (object) for easy user tracing
         if (medicationService.findByName(medicationToLoad.getName()) != null){
             Medication medication = medicationService.findByName(medicationToLoad.getName());
-            medication.setCode(medicationToLoad.getCode());
+            medication.setCode(medicationToLoad.getCode().toUpperCase());
             medication.setImage(medicationToLoad.getImage());
             medication.setName(medicationToLoad.getName());
             medication.setWeight(medicationToLoad.getWeight());
@@ -41,7 +47,7 @@ public class ModelMapping {
         }
         else{
             Medication medication = new Medication();
-            medication.setCode(medicationToLoad.getCode());
+            medication.setCode(medicationToLoad.getCode().toUpperCase());
             medication.setImage(medicationToLoad.getImage());
             medication.setName(medicationToLoad.getName());
             medication.setWeight(medicationToLoad.getWeight());

@@ -25,19 +25,14 @@ public class APIController {
     private final DroneServiceImplementation droneService;
     private final MedicationServiceImplementation medicationService;
 
-    //todo
-    //return all api endpoints urls
-    @GetMapping("/")
-    public ResponseEntity<Object> welcome() {
-        return ResponseEntity.ok().body("done");
-    }
-
 
     //register a drone
     @PostMapping("/register")
     public ResponseEntity<Object> RegisterDrone(@RequestBody DroneToRegister droneToRegister) {
+        //validate the inputs and determine if all are valid
         RegisterDroneValidator validator = new RegisterDroneValidator(droneService);
         ErrorModel model = validator.errorDuringDroneRegister(droneToRegister);
+
         if (model.isValid()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(droneService.saveDrone(new ModelMapping().fromDroneToRegister(droneToRegister)));
         } else {
@@ -57,8 +52,10 @@ public class APIController {
     @GetMapping("/drone")
     public ResponseEntity<Object> getDrone(@RequestBody DroneToView drone)
     {
+        //validate the inputs and determine if all are valid
         ViewDroneValidator validator = new ViewDroneValidator(droneService);
         ErrorModel model = validator.errorDuringViewDrone(drone);
+
         if (model.isValid()){
             return ResponseEntity.status(HttpStatus.FOUND).body(droneService.findById(drone.getId()));
         }
@@ -71,8 +68,10 @@ public class APIController {
     //view battery capacity of drone (finds it by id)
     @GetMapping("/battery")
     public ResponseEntity<Object> getDroneBatteryCapacity(@RequestBody DroneToView drone){
+        //validate the inputs and determine if all are valid
         ViewDroneValidator validator = new ViewDroneValidator(droneService);
         ErrorModel model = validator.errorDuringViewDrone(drone);
+
         if (model.isValid()){
             return ResponseEntity.status(HttpStatus.FOUND).body(new ModelMapping().fromDroneBatterCapacityToReturn(drone, droneService));
         }
@@ -92,9 +91,11 @@ public class APIController {
     //load a drone with medication item
     @PostMapping("/load")
     public ResponseEntity<Object> LoadDrone(@RequestBody MedicationToLoad medication) {
+        //validate the inputs and determine if all are valid
         Drone drone = droneService.findById(medication.getDroneId());
         LoadMedicationValidator validator = new LoadMedicationValidator(droneService);
         ErrorModel model = validator.errorDuringMedicationLoad(medication, drone);
+
         if (model.isValid()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(droneService.addMedicationToDrone(new ModelMapping().fromMedicationToLoad(medication, medicationService), drone));
         } else {
@@ -106,8 +107,10 @@ public class APIController {
     //view a drone's list of (loaded) medication
     @GetMapping("/loaded")
     public ResponseEntity<Object> checkLoadedMedication(@RequestBody DroneToView drone){
+        //validate the inputs and determine if all are valid
         ViewDroneValidator validator = new ViewDroneValidator(droneService);
         ErrorModel model = validator.errorDuringViewDrone(drone);
+
         if (model.isValid()){
             return ResponseEntity.status(HttpStatus.FOUND).body(droneService.findById(drone.getId()).getLoadedMedication());
         }
